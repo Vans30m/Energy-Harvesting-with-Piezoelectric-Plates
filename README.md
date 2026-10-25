@@ -1,5 +1,3 @@
-# Energy-Harvesting-with-Piezoelectric-Plates
-
 <div align="center">
 
 # Energy Harvesting with Piezoelectric Plates
@@ -19,7 +17,9 @@
 
 </div>
 
-## Table of Contents
+<details open>
+<summary><b>Table of Contents</b> (Click to collapse / expand)</summary>
+<br>
 
 - [Project Overview](#project-overview)
 - [Key Features](#key-features)
@@ -40,6 +40,8 @@
 - [Project Structure](#project-structure)
 - [Resume Description](#resume-description)
 - [License & Acknowledgements](#license--acknowledgements)
+
+</details>
 
 ---
 
@@ -80,27 +82,27 @@ The prototype integrates an end-to-end signal conditioning and monitoring pipeli
 
 <p align="center">
   <b>System Block Diagram</b><br>
-  <img src="images/Block-Diagram.jpeg" alt="System Block Diagram" width="850">
+  <img src="images/Block-Diagram.jpeg" alt="System Block Diagram" style="max-width: 100%; height: auto;" width="850">
 </p>
 
 <p align="center">
   <b>Tinkercad Circuit Schematic & Breadboard Wiring</b><br>
-  <img src="images/Circuit-Diagram.jpeg" alt="Labeled Circuit Schematic" width="850">
+  <img src="images/Circuit-Diagram.jpeg" alt="Labeled Circuit Schematic" style="max-width: 100%; height: auto;" width="850">
 </p>
 
 <p align="center">
   <b>Breadboard Electronics & Instrumentation Unit</b><br>
-  <img src="images/image1.jpeg" alt="Arduino UNO and LCD Display Prototype" width="700">
+  <img src="images/image1.jpeg" alt="Arduino UNO and LCD Display Prototype" style="max-width: 100%; height: auto;" width="700">
 </p>
 
 <p align="center">
   <b>Platform Assembly with 6-Disc Transducer Array</b><br>
-  <img src="images/image2.jpeg" alt="Tile Plate Assembly with Mounted Transducers" width="700">
+  <img src="images/image2.jpeg" alt="Tile Plate Assembly with Mounted Transducers" style="max-width: 100%; height: auto;" width="700">
 </p>
 
 <p align="center">
   <b>Complete Working Prototype on Wooden Base</b><br>
-  <img src="images/image3.jpeg" alt="Complete Prototype Setup" width="850">
+  <img src="images/image3.jpeg" alt="Complete Prototype Setup" style="max-width: 100%; height: auto;" width="850">
 </p>
 
 ---
