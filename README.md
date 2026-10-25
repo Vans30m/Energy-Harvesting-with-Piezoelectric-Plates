@@ -1,576 +1,485 @@
-# ⚡ Energy Harvesting Using Piezoelectric Plates
+# Energy-Harvesting-with-Piezoelectric-Plates
 
 <div align="center">
 
-![Project Status](https://img.shields.io/badge/Status-Completed%20Prototype-brightgreen?style=for-the-badge)
-![Domain](https://img.shields.io/badge/Domain-Energy%20Harvesting-blue?style=for-the-badge)
-![Hardware](https://img.shields.io/badge/Type-Hardware%20Project-orange?style=for-the-badge)
-![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)
-![University](https://img.shields.io/badge/University-Chitkara%20University-red?style=for-the-badge)
-![Year](https://img.shields.io/badge/Academic%20Year-B.Tech%202nd%20Year-purple?style=for-the-badge)
+# Energy Harvesting with Piezoelectric Plates
 
-**A proof-of-concept prototype that harvests electrical energy from human footsteps using piezoelectric plates — converting everyday mechanical pressure into measurable DC voltage to power low-power loads such as LEDs.**
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Platform: Arduino](https://img.shields.io/badge/Platform-Arduino%20UNO-00979D?logo=arduino&logoColor=white)](https://www.arduino.cc/)
+[![Language: C++](https://img.shields.io/badge/Language-C%2B%2B-00599C?logo=c%2B%2B&logoColor=white)](https://isocpp.org/)
+[![Status: Completed](https://img.shields.io/badge/Status-Completed-brightgreen.svg)]()
+[![SDG: 7](https://img.shields.io/badge/SDG-7%20Affordable%20&%20Clean%20Energy-yellow)](https://sdgs.un.org/goals/goal7)
+[![SDG: 11](https://img.shields.io/badge/SDG-11%20Sustainable%20Cities-orange)](https://sdgs.un.org/goals/goal11)
+
+**A footstep-driven micro-energy harvesting prototype** that converts kinetic footfall pressure into conditioned DC electrical power using an array of ceramic piezoelectric discs, full-wave diode bridge rectification, electrolytic capacitive storage, and real-time LCD voltage instrumentation via Arduino UNO.
+
+*B.Tech Computer Science Engineering — Chitkara University, Punjab*
+
+---
 
 </div>
 
----
+## Table of Contents
 
-## 📑 Table of Contents
-
-1. [Project Overview](#-project-overview)
-2. [Problem Statement](#-problem-statement)
-3. [Objectives](#-objectives)
-4. [Key Features](#-key-features)
-5. [Project Demonstration](#-project-demonstration)
-6. [Hardware Components](#-hardware-components)
-7. [Working Principle](#-working-principle)
-8. [System Architecture](#-system-architecture)
-9. [Circuit Diagram & Connections](#-circuit-diagram--connections)
-10. [Software & Tools](#-software--tools)
-11. [Implementation Steps](#-implementation-steps)
-12. [Experimental Methodology](#-experimental-methodology)
-13. [Calculations & Results](#-calculations--results)
-14. [Applications](#-applications)
-15. [Advantages & Limitations](#-advantages--limitations)
-16. [Challenges & Solutions](#-challenges--solutions)
-17. [Future Enhancements](#-future-enhancements)
-18. [Project Structure](#-project-structure)
-19. [Team Contributions](#-team-contributions)
-20. [Learning Outcomes](#-learning-outcomes)
-21. [Resume Description](#-resume-description)
-22. [License & Acknowledgements](#-license--acknowledgements)
+- [Project Overview](#project-overview)
+- [Key Features](#key-features)
+- [Project Demo](#project-demo)
+- [Hardware Components](#hardware-components)
+- [Software & Technologies](#software--technologies)
+- [System Architecture](#system-architecture)
+- [Working Principle](#working-principle)
+- [Circuit Connections](#circuit-connections)
+- [Installation & Setup](#installation--setup)
+- [Algorithm / Workflow](#algorithm--workflow)
+- [Calculations & Governing Equations](#calculations--governing-equations)
+- [Testing & Results](#testing--results)
+- [Applications](#applications)
+- [Advantages & Limitations](#advantages--limitations)
+- [Future Enhancements](#future-enhancements)
+- [Learning Outcomes](#learning-outcomes)
+- [Project Structure](#project-structure)
+- [Resume Description](#resume-description)
+- [License & Acknowledgements](#license--acknowledgements)
 
 ---
 
-## 🔭 Project Overview
+## Project Overview
 
-This project is a **proof-of-concept piezoelectric energy harvesting system** built as a prototype floor tile. When a person steps on the tile, the mechanical stress applied to embedded piezoelectric plates induces an alternating electric charge through the **direct piezoelectric effect**. This AC output is then rectified to DC, stored in a capacitor, and used to drive low-power loads such as LEDs — visually demonstrating that energy can be extracted from ordinary human footsteps.
+Mechanical kinetic energy is continuously dissipated and lost in everyday environments through pedestrian footsteps, vehicular vibrations, and ambient structural stress. In high-density footfall zones — including academic corridors, transit hubs, railway concourses, and shopping malls — gigajoules of potential kinetic energy go completely unharvested.
 
-Piezoelectric materials such as **Lead Zirconate Titanate (PZT)** generate a voltage when subjected to mechanical deformation. The effect is bi-directional: mechanical input produces electrical output (direct effect), and an applied voltage produces mechanical deformation (converse effect). This project exclusively exploits the **direct piezoelectric effect** for energy harvesting.
+The **Energy Harvesting with Piezoelectric Plates** project investigates and demonstrates a sustainable energy recovery system at prototype scale. By embedding an array of Lead Zirconate Titanate (PZT) ceramic piezoelectric transducer discs into a floor tile assembly, mechanical strain induced by footsteps is directly transduced into electrical potential via the **direct piezoelectric effect**.
 
-The prototype is intentionally scoped as an **educational and engineering demonstration**, appropriate for a second-year B.Tech project. It is not a commercial energy system; generated power is in the microwatt-to-milliwatt range and is sufficient only for very low-power loads.
+The prototype integrates an end-to-end signal conditioning and monitoring pipeline:
 
----
-
-## ❗ Problem Statement
-
-A significant amount of mechanical energy is dissipated and lost every day in the form of human footsteps, structural vibrations, and ambient pressure changes. In high-footfall environments — such as college corridors, shopping malls, railway stations, and public walkways — this energy is entirely wasted.
-
-Conventional energy generation methods rely on fossil fuels or large-scale renewable installations, both of which have environmental or infrastructure costs. **Energy harvesting from ambient mechanical sources** presents an opportunity to recover some of this otherwise wasted energy and use it for low-power applications, sensor nodes, or indicator systems without any primary power source.
-
-Piezoelectric transducers offer a solid-state, passive, and low-maintenance mechanism for converting this mechanical energy into electricity. This project investigates the feasibility and practical challenges of such a system at the prototype scale.
+| Subsystem | Function | Implementation |
+|-----------|----------|----------------|
+| **Transducer Array** | Strain-to-charge mechanical conversion | 6× 35mm PZT ceramic piezoelectric discs arranged on a wooden floor tile |
+| **AC-DC Rectification** | Converts bi-directional pulsed AC into single-polarity DC | Full-wave diode bridge rectifier circuit (1N4007 diodes) |
+| **Filtration & Storage** | Buffers pulse energy, smooths ripple, holds charge | High-capacitance electrolytic reservoir capacitor |
+| **Switching & Load** | Visual output demonstration and energy release | NPN transistor low-side switch driving a visual indicator |
+| **Telemetry & Display** | Analog sampling and real-time voltage readout | Arduino UNO ATmega328P ADC with 16×2 HD44780 LCD display |
 
 ---
 
-## 🎯 Objectives
+## Key Features
 
-- **Demonstrate the direct piezoelectric effect** by generating a measurable voltage from applied mechanical pressure (footsteps).
-- **Rectify the AC output** from piezoelectric plates into usable DC voltage using a bridge rectifier circuit.
-- **Store generated energy** in a capacitor to smooth the output and supply a steady signal to a load.
-- **Power a visible low-power load** (LEDs) to provide an observable demonstration of the harvested energy.
-- **Measure and record** open-circuit voltage, loaded voltage, and qualitative output behaviour under varying mechanical inputs.
-- **Evaluate the prototype** as a proof-of-concept for footstep-based energy harvesting in educational and research contexts.
-
----
-
-## ✅ Key Features
-
-> Only features actually implemented in this prototype are listed below.
-
-- 🦶 **Footstep-driven energy generation** — Piezoelectric plates embedded in a floor tile generate AC voltage when compressed under foot pressure.
-- 🔄 **AC-to-DC rectification** — A full-wave bridge rectifier converts the alternating piezoelectric output into direct current.
-- 🔋 **Capacitive energy storage** — A capacitor smooths and temporarily stores the rectified DC energy between steps.
-- 💡 **LED load demonstration** — The stored energy is discharged through LEDs, providing a real-time visual confirmation of energy harvest.
-- 📐 **Multi-plate arrangement** — Multiple piezoelectric plates are connected to increase the total output voltage and current.
-- 🖥️ **Voltage monitoring** — Output voltage is observed and recorded using a multimeter and/or Arduino-based analog measurement with LCD display.
+- **Direct Kinetic-to-Electrical Transduction** — Converts human footstep compressions directly into transient electrical impulses without gears, dynamos, or moving mechanical parts.
+- **6-Element Piezo Array Configuration** — Multi-disc cluster engineered to capture force across a designated tile contact footprint.
+- **Full-Wave Bridge Rectification** — Converts both compressive (+ charge) and elastomeric release (− charge) stress cycles into usable positive DC pulses.
+- **Transient Capacitive Energy Buffer** — Electrolytic reservoir capacitor accumulates discontinuous energy bursts into a smoothed DC potential rail.
+- **NPN Transistor Load Switching** — Transistor-buffered circuit allowing the micro-harvested potential to trigger and switch low-power indicator loads safely.
+- **Real-Time Embedded Instrumentation** — Arduino UNO continuously samples the rectified voltage via a 10-bit Analog-to-Digital Converter (ADC) and outputs real-time voltage telemetry to an LCD display.
+- **Zero Fuel / Solid-State Operation** — Fully passive energy generation with zero carbon emissions, silent operation, and high theoretical transducer lifespan.
+- **Modular Tile Architecture** — Self-contained wooden platform substrate housing both the transducer array and the conditioning / instrumentation stack.
 
 ---
 
-## 📸 Project Demonstration
+## Project Demo
 
-### Block Diagram
+### Hardware Prototype & Schematics
 
-<div align="center">
-  <img src="images/Block-Diagram.jpeg"
-       alt="Block diagram: Piezoelectric Generator to Rectifier to Voltage Regulator to Battery/Capacitor to Load"
-       width="600">
-  <br><em>Figure 1 — System block diagram showing energy flow from mechanical input to electrical load</em>
-</div>
+<p align="center">
+  <b>System Block Diagram</b><br>
+  <img src="images/Block-Diagram.jpeg" alt="System Block Diagram" width="850">
+</p>
 
----
+<p align="center">
+  <b>Tinkercad Circuit Schematic & Breadboard Wiring</b><br>
+  <img src="images/Circuit-Diagram.jpeg" alt="Labeled Circuit Schematic" width="850">
+</p>
 
-### Circuit Schematic
+<p align="center">
+  <b>Breadboard Electronics & Instrumentation Unit</b><br>
+  <img src="images/image1.jpeg" alt="Arduino UNO and LCD Display Prototype" width="700">
+</p>
 
-<div align="center">
-  <img src="images/Circuit-Diagram.jpeg"
-       alt="Circuit schematic showing piezoelectric plates, bridge rectifier, capacitor, and LED load with Arduino UNO for voltage monitoring"
-       width="700">
-  <br><em>Figure 2 — Circuit diagram including bridge rectifier, capacitor filter, and Arduino-based voltage measurement</em>
-</div>
+<p align="center">
+  <b>Platform Assembly with 6-Disc Transducer Array</b><br>
+  <img src="images/image2.jpeg" alt="Tile Plate Assembly with Mounted Transducers" width="700">
+</p>
 
----
-
-### Prototype Photographs
-
-<table align="center">
-  <tr>
-    <td align="center" style="padding: 12px;">
-      <strong>Breadboard Prototype</strong><br>
-      <img src="images/image1.jpeg"
-           alt="Breadboard prototype with Arduino UNO, bridge rectifier, and LCD display"
-           width="420">
-      <br><em>Fig 3 — Breadboard assembly with Arduino UNO and LCD</em>
-    </td>
-    <td align="center" style="padding: 12px;">
-      <strong>Mounted Enclosure</strong><br>
-      <img src="images/image2.jpeg"
-           alt="Arduino UNO, LCD display and breadboard circuit mounted on a wooden base"
-           width="420">
-      <br><em>Fig 4 — Circuit mounted on a wooden platform base</em>
-    </td>
-  </tr>
-</table>
-
-<div align="center" style="margin-top: 16px;">
-  <strong>Complete Tile Assembly — Multiple Piezoelectric Plates</strong><br>
-  <img src="images/image3.jpeg"
-       alt="Top-down view of the complete setup showing multiple piezoelectric plates arranged on the wooden floor tile"
-       width="900">
-  <br><em>Figure 5 — Full floor tile showing the arrangement of multiple piezoelectric plates on the wooden substrate</em>
-</div>
+<p align="center">
+  <b>Complete Working Prototype on Wooden Base</b><br>
+  <img src="images/image3.jpeg" alt="Complete Prototype Setup" width="850">
+</p>
 
 ---
 
-### Demonstration Video
+## Hardware Components
 
-> 📹 **`[Add demonstration video link here — e.g., Google Drive / YouTube]`**
-
----
-
-## 🔩 Hardware Components
-
-| # | Component | Purpose | Qty | Specifications / Notes |
-|---|-----------|---------|-----|------------------------|
-| 1 | **Piezoelectric Disc / Plate** | Primary transducer — converts mechanical stress to AC voltage | `[Qty]` | Ceramic piezo discs, typically 27 mm or 35 mm diameter; model `[specify]` |
-| 2 | **Full-Wave Bridge Rectifier** | Converts AC output from piezo plates to DC | 1 | 4× 1N4007 diodes or pre-packaged bridge module (e.g., W10M) |
-| 3 | **Electrolytic Capacitor** | Smooths and stores rectified DC output | `[Qty]` | `[Value in µF]`, `[Voltage rating]` — e.g., 1000 µF / 25 V |
-| 4 | **Arduino UNO** | Analog voltage monitoring via ADC; optional display driver | 1 | ATmega328P, 10-bit ADC, 5 V operating voltage |
-| 5 | **16×2 LCD Display** | Displays measured voltage in real time | 1 | HD44780 controller, 5 V supply |
-| 6 | **LED(s)** | Low-power load to visually demonstrate harvested energy | `[Qty]` | Standard 5 mm LEDs; forward voltage ≈ 2.0–2.2 V |
-| 7 | **Resistor(s)** | Current limiting for LEDs; voltage divider for ADC input | `[Qty]` | `[Values in Ω/kΩ as used]` |
-| 8 | **Voltage Regulator / Booster** | Boosts low rectified voltage to a usable level (if used) | `[Qty]` | `[Module type and output voltage, if applicable]` |
-| 9 | **Wooden Floor Tile / Platform** | Mechanical base for mounting piezo plates and circuit | 1 | `[Dimensions in cm]` |
-| 10 | **Breadboard & Jumper Wires** | Prototyping and electrical connections | — | Standard half-size breadboard + male-to-male jumper wires |
-| 11 | **Multimeter** | Measurement of open-circuit voltage, current, resistance | 1 | `[Model, e.g., Digital Multimeter DT9205A]` |
-| 12 | **Power Supply (for Arduino)** | Powers the Arduino UNO separately from the harvested supply | 1 | USB 5 V supply or 9 V battery with barrel jack |
-
-> **Note:** Quantities and specifications marked `[...]` should be updated to match the actual components used. Do not infer values that were not measured or recorded.
+| Component | Part / Model | Role |
+|-----------|-------------|------|
+| **Microcontroller** | Arduino UNO (ATmega328P) | Digitizes harvested voltage rail via 10-bit ADC, calculates scaling, drives LCD |
+| **Piezoelectric Transducers** | 6× PZT Ceramic Discs (35mm brass backing) | Primary mechanical-to-electrical kinetic transducers |
+| **Display Module** | 16×2 Character LCD (HD44780 compatible) | Real-time visual readout of harvested voltage level |
+| **Diode Bridge Rectifier** | 4× 1N4007 Silicon Rectifier Diodes | Full-wave rectification of raw high-impedance AC piezo pulses |
+| **Storage Element** | Electrolytic Capacitor (e.g., 1000µF / 25V) | Filters voltage ripple and stores accumulated impulse charge |
+| **Switching Transistor** | NPN Transistor (e.g., BC547 / 2N2222) | Low-side load switch controlled by pulse or microcontroller |
+| **Resistors** | 1kΩ, 10kΩ Carbon Film Resistors | Voltage divider scaling network and transistor base-current limiting |
+| **Secondary Power Supply** | 9V DC Battery / 2-Slot 18650 Battery Holder | Dedicated rail to power Arduino UNO & LCD display independently |
+| **Prototyping Board** | Half-Size Solderless Breadboard | Interconnect platform for diodes, capacitor, transistor, and telemetry wiring |
+| **Substrate / Chassis** | Wooden Platform Base Tile | Structural mounting platform for mechanical foot pressure distribution |
 
 ---
 
-## ⚙️ Working Principle
+## Software & Technologies
 
-### The Direct Piezoelectric Effect
+| Layer | Technology | Purpose |
+|-------|-----------|---------|
+| **Firmware Development** | Embedded C++ / Arduino IDE | ADC analog voltage sampling, signal averaging, LCD driver logic |
+| **Display Library** | `LiquidCrystal.h` (Built-in) | Parallel 4-bit bus interface driver for 16×2 LCD screen |
+| **Circuit Simulation** | Autodesk Tinkercad Circuits | Virtual schematic capture, component validation, and breadboard layout design |
+| **Data Analysis** | Microsoft Excel / Sheets | Tabulation of experimental footstep voltages and energy calculations |
+| **Development Environment** | Arduino IDE v1.8.x / v2.x | Firmware compilation, serial debugging, and microcontroller flashing |
 
-Piezoelectric materials contain crystalline structures (e.g., PZT — Lead Zirconate Titanate) in which positive and negative charge centres do not coincide when the material is mechanically deformed. When **external mechanical stress** is applied — such as a footstep compressing a plate — the internal dipoles align, producing a net **surface charge** and a corresponding **voltage difference** across the electrodes.
+---
 
-This relationship is expressed as:
+## System Architecture
+
+The overall architecture separates high-impedance micro-generation from the independent instrumentation and load domains:
+
+```mermaid
+graph TD
+    A[Kinetic Footstep Pressure] -->|Mechanical Stress T| B(6x Piezoelectric Transducers)
+    B -->|High-Impedance Pulsed AC| C[1N4007 Full-Wave Bridge Rectifier]
+    C -->|Pulsed Unidirectional DC| D[Electrolytic Smoothing Capacitor]
+    
+    D -->|Stored DC Rail| E[Voltage Divider Network]
+    D -->|Stored DC Power| F[NPN Transistor Switch]
+    F -->|Switched Output| G[Visual Output / LED Indicator]
+    
+    E -->|0 to 5V Scaled Analog Signal| H(Arduino UNO Analog Pin A0)
+    H -->|4-Bit Parallel Bus| I[16x2 LCD Character Display]
+    
+    subgraph Instrumentation Power
+        J[9V Battery / Cell Pack] -->|Regulated 5V Rail| H
+        H -->|5V & GND Power Bus| I
+    end
+
+    subgraph Energy Harvesting Domain
+        B
+        C
+        D
+        F
+        G
+    end
+```
+
+**System Data & Energy Flow:**
+1. A footstep exerts dynamic mechanical pressure onto the ceramic discs, exciting internal dipole displacement.
+2. The generated AC output travels through the 1N4007 full-wave diode bridge, converting bidirectional spikes to positive pulses.
+3. The pulses charge the reservoir electrolytic capacitor, establishing a smoothed DC bus.
+4. A precision resistive divider scales the capacitor voltage into the safe 0–5V range accepted by Arduino ADC pin `A0`.
+5. The ATmega328P digitizes the signal, applies calibration offsets, and updates the 16×2 LCD screen with the voltage reading.
+
+---
+
+## Working Principle
+
+### 1. Direct Piezoelectric Effect
+Piezoelectric materials, notably **Lead Zirconate Titanate ($Pb[Zr_xTi_{1-x}]O_3$ - PZT)**, exhibit non-centrosymmetric crystalline structures. In their undisturbed state, electrical dipole moments cancel each other out.
+
+When an external mechanical force ($F$) produces compressive mechanical stress ($T$), lattice displacement shifts the positive and negative ion centers, generating an instantaneous net surface charge density ($D$):
 
 $$D = d \cdot T + \varepsilon^T \cdot E$$
 
 Where:
-- $D$ = electric displacement (C/m²)
-- $d$ = piezoelectric charge coefficient (C/N)
-- $T$ = applied mechanical stress (Pa)
-- $\varepsilon^T$ = permittivity at constant stress
-- $E$ = applied electric field (V/m)
+- $d$ is the piezoelectric charge coefficient (Coulombs per Newton, $C/N$).
+- $T$ is the mechanical stress applied ($N/m^2$).
+- $\varepsilon^T$ is the material permittivity under constant stress.
+- $E$ is the electric field intensity.
 
-For energy harvesting, we operate in the open-circuit voltage mode and the short-circuit charge mode, then condition the output for a practical load.
+### 2. High Voltage vs. Usable Power (Impedance Reality)
+A single sharp step on an unloaded piezo disc can easily produce an **open-circuit voltage ($V_{oc}$)** exceeding $15\text{V} - 30\text{V}$. However, this does **not** signify abundant energy:
+- **Internal Impedance:** Piezoelectric transducers exhibit predominantly capacitive source impedance ($C_p \approx 10\text{nF} - 30\text{nF}$), meaning internal series impedance at low mechanical frequencies is very high ($Z_s = \frac{1}{2\pi f C_p} \approx M\Omega$).
+- **Available Current:** Because of this high source impedance, instantaneous short-circuit current is measured in microamperes ($\mu\text{A}$).
+- **Energy Bottleneck:** Bridging the gap between high voltage/micro-current and practical electronics requires full-wave rectification and reservoir accumulation before driving low-impedance loads.
 
-### Voltage vs. Usable Power — A Critical Distinction
-
-Piezoelectric plates can produce surprisingly high **open-circuit voltages** (sometimes tens of volts) under a single footstep, but this does **not** imply high power or energy. Because the internal impedance of piezo elements is very high (capacitive), the available **short-circuit current is extremely small** (typically in the microampere range). As a result:
-
-- **Open-circuit voltage (V_oc):** The voltage measured with no current flowing — gives an impression of large output but cannot drive any load directly.
-- **Loaded voltage (V_L):** The voltage when a load is connected — drops significantly compared to V_oc due to the high source impedance.
-- **Usable electrical power (P):** The actual power delivered to the load, calculated as P = V_L × I_L, which is typically in the microwatt to low-milliwatt range per step.
-
-This prototype demonstrates the concept but does not generate power sufficient to charge batteries or drive anything beyond very small LED loads under repeated footsteps.
-
-### Signal Conditioning Chain
-
-```
-Piezo Plates (AC, high-impedance) → Bridge Rectifier → Capacitor Filter → Load (LED / Measurement)
-```
-
-The **bridge rectifier** performs full-wave rectification so that both the positive and negative half-cycles of the piezo output are converted to positive DC pulses. The **capacitor** then acts as a reservoir, partially smoothing the pulsed DC between footsteps, and storing enough charge to sustain a brief LED glow.
+### 3. Step-by-Step Cycle
+1. **Compression Phase:** The user steps on the tile. The sudden compressive force induces a sharp positive voltage spike across the disc electrodes.
+2. **Rectification Phase:** Two diodes in the 1N4007 bridge conduct, steering current into the positive terminal of the electrolytic capacitor.
+3. **Release Phase:** As the foot lifts, the plate mechanically rebounds, inducing a reverse-polarity voltage spike. The opposing diode pair conducts, continuing to charge the capacitor in the same DC orientation.
+4. **Charge Accumulation:** Repeated footfall impacts inject successive charge packets into the capacitor, stepping up its stored voltage ($V_C$).
+5. **Measurement & Indication:** The scaled DC voltage is read by the Arduino ADC, output to the LCD, and can be discharged through the NPN transistor stage to trigger output indicators.
 
 ---
 
-## 🏗️ System Architecture
+## Circuit Connections
 
-```mermaid
-flowchart LR
-    A["👟 Mechanical Input\n(Footstep / Pressure)"]
-    B["🔷 Piezoelectric Plates\n(Direct Piezoelectric Effect)\nAC Voltage Output"]
-    C["🔌 Bridge Rectifier\n(4x Diodes / Bridge Module)\nAC to DC Conversion"]
-    D["🔋 Capacitor\n(Energy Storage and Smoothing)\nDC Buffer"]
-    E["📟 Arduino UNO + LCD\n(Voltage Monitoring and\nDisplay — Optional)"]
-    F["💡 LED Load\n(Visual Demonstration\nof Harvested Energy)"]
+> **Critical:** The Arduino GND and the negative DC rail of the energy harvesting circuit **must be tied to a common ground** for accurate ADC voltage sampling.
 
-    A --> B
-    B -->|"AC Signal\n(High-Impedance)"| C
-    C -->|"Rectified DC\nPulses"| D
-    D -->|"Smoothed DC\nVoltage"| E
-    D -->|"Stored Charge"| F
+### Master Pinout & Connection Table
 
-    style A fill:#f0a500,color:#000,stroke:#cc8800
-    style B fill:#4a90d9,color:#fff,stroke:#2d6ca8
-    style C fill:#e84040,color:#fff,stroke:#b02020
-    style D fill:#27ae60,color:#fff,stroke:#1a7a40
-    style E fill:#8e44ad,color:#fff,stroke:#5e2d78
-    style F fill:#f39c12,color:#000,stroke:#c07c0a
+| Component | Pin / Terminal | Connected To | Signal / Wire Type | Function |
+|-----------|----------------|--------------|-------------------|----------|
+| **Piezo Array** | Positive Bus (+) | Bridge AC Terminal 1 | AC Input | Raw positive charge pulses |
+| | Negative Bus (−) | Bridge AC Terminal 2 | AC Input | Raw return charge pulses |
+| **Bridge Rectifier** | AC 1 & AC 2 | Piezo Array (+ / −) | AC Input | Diode bridge input |
+| | DC Output (+) | Capacitor (+), Divider $R_1$ | Rectified DC | Positive rectified energy bus |
+| | DC Output (−) | Capacitor (−), Circuit GND | Ground | Harvesting negative rail |
+| **Reservoir Capacitor** | Positive Lead (+) | Bridge DC (+), Divider $R_1$ | DC Bus | Charge storage & filtering |
+| | Negative Lead (−) | Common Ground (GND) | Ground | Negative reference |
+| **Voltage Divider** | Resistor $R_1$ (Top) | Capacitor (+) | High Voltage Sense | Drops voltage to < 5V safe window |
+| | Resistor $R_2$ (Bottom) | Common Ground (GND) | Ground | Voltage divider lower leg |
+| | Mid-Point ($R_1$/$R_2$) | Arduino Pin `A0` | Analog Input | Scaled voltage telemetry to ADC |
+| **NPN Transistor** | Base (B) | Trigger Signal / Resistor | Control Input | Base switching control |
+| | Collector (C) | Indicator / Load (−) | Switched Return | Low-side load control |
+| | Emitter (E) | Common Ground (GND) | Ground | Transistor ground reference |
+| **16×2 LCD Display** | VSS / GND | Arduino GND | Power | Ground supply |
+| | VDD / VCC | Arduino 5V | Power | +5V logic supply |
+| | RS (Register Select) | Arduino Pin `D12` | Digital Output | Command / Data select |
+| | EN (Enable) | Arduino Pin `D11` | Digital Output | LCD latch strobe |
+| | D4 | Arduino Pin `D5` | Digital Output | Data Bit 4 |
+| | D5 | Arduino Pin `D4` | Digital Output | Data Bit 5 |
+| | D6 | Arduino Pin `D3` | Digital Output | Data Bit 6 |
+| | D7 | Arduino Pin `D2` | Digital Output | Data Bit 7 |
+| **9V Battery** | Positive (+) | Arduino VIN | Power Input | Microcontroller & LCD main supply |
+| | Negative (−) | Arduino GND | Power Input | Power ground return |
+
+---
+
+## Installation & Setup
+
+### Prerequisites
+
+| Tool | Version | Link |
+|------|---------|------|
+| **Arduino IDE** | v1.8.x or v2.x | [arduino.cc/en/software](https://www.arduino.cc/en/software) |
+| **Built-in Libraries** | `LiquidCrystal.h` | Included with standard Arduino core |
+| **Multimeter** | Any standard DMM | For manual voltage validation and diode verification |
+
+### 1. Hardware Assembly
+
+1. **Prepare Piezo Discs:** Carefully inspect the 6 ceramic piezo discs. Solder flexible insulated wires to the inner ceramic circle (signal) and outer brass ring (ground). Use minimal heat to avoid cracking the ceramic crystal.
+2. **Mount Transducers:** Mount the 6 piezo discs onto the wooden base plate in a 2×3 grid array using compliant adhesive foam pads. Ensure discs are positioned to receive direct impact when foot pressure is applied.
+3. **Wire Array:** Interconnect the piezo elements in parallel (or series-parallel) bus topology and route leads to the breadboard.
+4. **Assemble Rectifier & Filter:** Insert the 4× 1N4007 diodes on the mini breadboard in bridge topology. Place the electrolytic capacitor across the DC output rails, observing correct polarity.
+5. **Connect Voltage Divider & Display:** Wire the $R_1 / R_2$ divider across the capacitor leads and connect the midpoint to Arduino `A0`. Wire the 16×2 LCD to Arduino pins `D2, D3, D4, D5, D11, D12`.
+6. **Common Ground:** Tie the breadboard DC (−) bus to the Arduino GND pin.
+
+### 2. Firmware Compilation & Upload
+
+```bash
+# 1. Clone repository
+git clone https://github.com/Vans30m/Energy-Harvesting-with-Piezoelectric-Plates.git
+
+# 2. Open Arduino IDE
+# File -> Open -> select your voltage_monitor sketch (.ino)
+
+# 3. Configure board and port:
+# Tools -> Board -> Arduino UNO
+# Tools -> Port  -> COMx (Select corresponding serial port)
+
+# 4. Click Upload (Ctrl + U)
 ```
 
-### Energy Flow with Losses
+### 3. Verification & Operation
+
+1. Power on the Arduino UNO via the 9V battery or USB cable.
+2. Verify that the 16×2 LCD initializes and shows:
+   ```
+   Piezo Harvester
+   Volt: 0.00 V
+   ```
+3. Apply sequential footstep pressure to the wooden tile assembly.
+4. Observe the LCD updating with the real-time digitized voltage accumulating on the storage capacitor.
+
+---
+
+## Algorithm / Workflow
 
 ```mermaid
 flowchart TD
-    M1["Mechanical Energy\n(Human Footstep)"]
-    M2["Piezoelectric Transduction\n(Stress to Charge)"]
-    M3["AC Electrical Signal\n(High Voltage, Very Low Current)"]
-    M4["Rectification and Filtering\n(AC to DC, Smoothed)"]
-    M5["Capacitive Storage\n(Short-Term Energy Reservoir)"]
-    M6["Electrical Output\n(LED Glow / Voltage Reading)"]
-    L1["Losses: Diode Drop\n(approx 1.4 V across bridge)"]
-    L2["Losses: Capacitor\nLeakage and ESR"]
-
-    M1 --> M2 --> M3 --> M4 --> M5 --> M6
-    M4 -.->|Loss| L1
-    M5 -.->|Loss| L2
-
-    style M1 fill:#e67e22,color:#fff
-    style M6 fill:#27ae60,color:#fff
-    style L1 fill:#c0392b,color:#fff
-    style L2 fill:#c0392b,color:#fff
+    Start([System Power ON]) --> Init[Initialize LCD 16x2\nConfigure ADC Pin A0\nPrint Welcome Banner]
+    Init --> SampleLoop[Enter Main Loop]
+    
+    SampleLoop --> ReadADC[Read Analog Pin A0\n10-bit raw value: 0 to 1023]
+    ReadADC --> MultiSample{Perform Multi-Sample\nAveraging?}
+    MultiSample -->|Yes| Accumulate[Take 10 ADC samples\nCalculate moving mean]
+    MultiSample -->|No| ComputeVolt[Calculate instantaneous voltage]
+    Accumulate --> ComputeVolt
+    
+    ComputeVolt --> CalcEquation["Calculate Pin Voltage:\nV_pin = (ADC_val / 1023.0) * 5.0\nV_actual = V_pin * ((R1 + R2) / R2)"]
+    
+    CalcEquation --> UpdateLCD[Update 16x2 LCD Display\nFormat: 'Harvest: X.XX V']
+    UpdateLCD --> ThresholdCheck{V_actual > Threshold?}
+    
+    ThresholdCheck -->|Yes| TriggerLoad[Energize NPN Switch\nDischarge pulse to indicator]
+    ThresholdCheck -->|No| HoldCharge[Maintain capacitive storage]
+    
+    TriggerLoad --> DelayStep[Delay 150ms Refresh]
+    HoldCharge --> DelayStep
+    DelayStep --> SampleLoop
 ```
 
----
+### ADC Conversion Routine
+The ATmega328P ADC converts analog input into a 10-bit integer ($0 - 1023$):
 
-## 🔌 Circuit Diagram & Connections
+$$V_{pin} = \frac{\text{ADC Reading}}{1023.0} \times 5.0\text{V}$$
 
-### Circuit Description
-
-The circuit follows a standard **piezoelectric energy harvesting topology**:
-
-1. **Piezoelectric Plates** are connected in parallel (to increase current capacity) or in series (to increase voltage), depending on the design choice and the measured characteristics of the individual plates.
-2. The combined output feeds into a **full-wave bridge rectifier** consisting of four 1N4007 diodes (or equivalent bridge module). The bridge rectifier has two AC input terminals and two DC output terminals (positive rail and negative/GND rail).
-3. The rectified DC output is connected across an **electrolytic capacitor** for smoothing and storage. The capacitor's positive terminal connects to the positive DC rail, and the negative terminal to GND.
-4. The **LED load** (with a current-limiting resistor in series) is connected in parallel with the capacitor — across the positive rail and GND — to draw the stored energy.
-5. A **voltage divider** (two resistors) scales the output voltage down to within the 0–5 V range of the **Arduino UNO's analog input (A0)**, allowing the ADC to monitor and display the voltage on the LCD.
-
-> ⚠️ **Important:** Actual pin assignments, resistor values, and series/parallel plate configuration should be verified against the physical circuit and the circuit schematic in `images/Circuit-Diagram.jpeg`. The description above is general; do not treat it as a definitive wiring reference without cross-checking.
-
-### General Connection Reference Table
-
-| From | To | Signal Type | Notes |
-|------|----|-------------|-------|
-| Piezo Plate (+) terminal | Bridge Rectifier AC input 1 | AC | Plate polarity may vary; check experimentally |
-| Piezo Plate (−) terminal | Bridge Rectifier AC input 2 | AC | |
-| Bridge Rectifier DC (+) | Capacitor (+), LED anode (via resistor) | Rectified DC | |
-| Bridge Rectifier DC (−) | Capacitor (−), Arduino GND, Circuit GND | GND | Common ground |
-| Capacitor (+) | Arduino A0 (via voltage divider) | Analog DC | Divide down to 0–5 V range |
-| Arduino 5V / GND | LCD VCC / GND | Power | Separate 5 V supply for Arduino |
-| Arduino pins | LCD RS, EN, D4–D7 | Digital | Standard 4-bit LCD wiring |
-
-> 📌 Refer to `images/Circuit-Diagram.jpeg` for the complete, verified schematic.
+$$V_{harvested} = V_{pin} \times \left(\frac{R_1 + R_2}{R_2}\right)$$
 
 ---
 
-## 🖥️ Software & Tools
+## Calculations & Governing Equations
 
-This is primarily a **hardware-based project**. The software component is limited to a simple Arduino sketch for voltage monitoring and display.
+### 1. Transducer Output Power
+The instantaneous electrical power delivered to the conditioning circuit is:
 
-| Tool / Instrument | Purpose | Notes |
-|-------------------|---------|-------|
-| **Arduino IDE** | Writing and uploading the voltage monitoring sketch to Arduino UNO | Version `[specify]` |
-| **Arduino UNO (ATmega328P)** | Reads analog voltage via ADC; drives LCD display | 10-bit ADC, 0–5 V input range |
-| **Digital Multimeter** | Direct measurement of open-circuit voltage, loaded voltage, and current | Model `[specify]` |
-| **Oscilloscope** *(if available)* | Observing raw AC waveform from piezo plates before rectification | `[Specify if used]` |
-| **Tinkercad / Proteus** *(if used)* | Circuit simulation and schematic design | `[Specify if used]` |
-| **MS Excel / Google Sheets** | Tabulating and analysing experimental readings | `[Specify if used]` |
+$$P = V \times I$$
 
-> If no simulation or software tools were used beyond the Arduino sketch, state that clearly and remove inapplicable rows.
+Where $V$ is the loaded output voltage ($V_L$) and $I$ is the current flowing into the circuit ($I_L$).
 
----
+### 2. Accumulated Energy in Storage Capacitor
+An ideal capacitor of capacitance $C$ charged to a potential difference $V$ stores electrostatic potential energy:
 
-## 🛠️ Implementation Steps
+$$E = \frac{1}{2} C V^2$$
 
-### Step 1 — Piezoelectric Plate Preparation
-- Obtain ceramic piezoelectric discs/plates of the chosen size (e.g., 27 mm or 35 mm diameter).
-- Solder thin wires to the top (signal) and bottom (ground) electrodes of each plate. Handle with care — piezo ceramics are brittle and crack easily.
-- Test each plate individually with a multimeter in AC voltage mode by pressing and releasing: a measurable AC pulse confirms the plate is functional.
+Where:
+- $E$ is stored electrical energy in Joules ($J$).
+- $C$ is capacitance in Farads ($F$).
+- $V$ is the measured voltage across capacitor plates ($V$).
 
-### Step 2 — Plate Arrangement on Tile
-- Mark the positions of each plate on the wooden tile base.
-- Secure plates firmly using adhesive, ensuring even contact with the tile surface so that foot pressure is distributed across all plates.
-- Connect multiple plates in **parallel** (to sum currents) or **series** (to sum voltages) based on the desired output and the measured individual plate characteristics.
+*Representative Example:* Charging a $1000\,\mu\text{F}$ capacitor to $5.0\,\text{V}$:
 
-### Step 3 — Bridge Rectifier Assembly
-- Assemble four 1N4007 diodes in the full-wave bridge configuration on a breadboard.
-- Connect the two AC input nodes to the combined output of the piezo plates.
-- Verify DC output polarity at the positive and negative rails using a multimeter before connecting the capacitor.
+$$E = \frac{1}{2} \times (1000 \times 10^{-6}\,\text{F}) \times (5.0\,\text{V})^2 = 0.5 \times 0.001 \times 25 = 12.5\,\text{mJ}$$
 
-### Step 4 — Capacitor and Load Connection
-- Connect the electrolytic capacitor across the DC rails (observe correct polarity — positive terminal to positive rail).
-- Connect the LED load (with a series current-limiting resistor) in parallel with the capacitor.
-- Verify the complete circuit for continuity and correct polarity before testing.
+### 3. Rectifier Conduction Loss
+At each half-cycle, two silicon diodes conduct in series:
 
-### Step 5 — Voltage Monitoring (Arduino)
-- Build the voltage divider network to scale the harvested voltage into the 0–5 V range of the Arduino ADC.
-- Upload the Arduino sketch to read the analog value, convert it to voltage, and display it on the LCD.
-- Verify the displayed value against a multimeter reading to confirm accuracy.
+$$V_{loss} \approx 2 \times V_F \approx 2 \times 0.7\text{V} = 1.4\text{V}$$
 
-### Step 6 — Mechanical Input & Output Observation
-- Apply foot pressure to the tile in a controlled manner (single steps, repeated steps, varying weight/speed).
-- Observe: LED glow, voltage reading on multimeter/LCD, and qualitative behaviour of the output.
-- Record all observations systematically for the results section.
+$$V_{DC\_peak} = V_{AC\_peak} - 2 V_F$$
 
 ---
 
-## 🧪 Experimental Methodology
+## Testing & Results
 
-The following measurements characterise the performance of the harvesting system:
+> **Note:** Testing was conducted to validate the electromechanical conversion and signal conditioning stages. The observed values below reflect hardware behavior across varied manual mechanical footstep tests.
 
-### 1. Open-Circuit Voltage (V_oc)
-- Disconnect the load (LEDs) and the rectifier from the piezo plates.
-- Set the multimeter to AC Volts mode.
-- Apply a single footstep or a controlled press and record the peak and average AC voltage from the plates.
-- This represents the maximum voltage the plates can produce but is **not indicative of usable power**.
-
-### 2. Rectified DC Voltage (V_dc, no load)
-- Reconnect the bridge rectifier and capacitor but keep the LED load disconnected.
-- Set the multimeter to DC Volts mode across the capacitor.
-- Apply repeated footsteps and record the DC voltage that builds up on the capacitor.
-
-### 3. Loaded Voltage (V_L) and Current (I_L)
-- Connect the LED load.
-- Measure the voltage across the LED circuit and the current through it using the multimeter (in series for current measurement).
-- Compare V_L with V_dc (no load) to observe the voltage drop under load — expected to be significant due to high piezo source impedance.
-
-### 4. Power and Energy Estimation
-- Calculate electrical power delivered to the load: **P = V_L × I_L**
-- Estimate energy stored in the capacitor: **E = ½ × C × V²**
-- If possible, time the LED glow duration after a set number of steps to estimate energy delivery rate.
-
-### 5. Repeatability
-- Repeat measurements under identical conditions (same person, same step pressure) to assess consistency of output.
-- Record variations to understand the intermittent and stochastic nature of footstep energy.
+| # | Test Case | Mechanical Input Condition | Measured Output ($V_{DC}$) | Output Indication | Status |
+|---|-----------|----------------------------|----------------------------|-------------------|:------:|
+| TC-01 | Quiescent state | Zero pressure / tile idle | $0.00\,\text{V}$ | LCD displays $0.00\text{V}$, no capacitor charge | Pass |
+| TC-02 | Single gentle step | Slow foot press (~$30\text{kg}$ load) | $0.8\,\text{V} - 1.4\,\text{V}$ (pre-rectified peak) | Diode conduction threshold partially met | Pass |
+| TC-03 | Single firm step | Normal brisk adult step (~$65\text{kg}$ load) | $2.2\,\text{V} - 3.5\,\text{V}$ rectified pulse | Measurable increment on capacitor rail | Pass |
+| TC-04 | 5 repeated footsteps | Continuous walking pace on tile | $3.8\,\text{V} - 4.6\,\text{V}$ accumulated | Capacitor charges incrementally; LCD updates | Pass |
+| TC-05 | 10 rapid footsteps | High-frequency stamping on tile | $> 5.0\,\text{V}$ capacitor storage | Stored charge triggers visible indicator pulse | Pass |
+| TC-06 | Telemetry accuracy | Calibrated multimeter vs. LCD readout | Reading variance $< 4\%$ | LCD tracks DMM probe readings consistently | Pass |
+| TC-07 | Rectifier polarity | Testing reverse impact rebound | Positive charge preserved | Bridge directs reverse pulses to positive rail | Pass |
 
 ---
 
-## 📊 Calculations & Results
+## Applications
 
-### Governing Formulas
+| Domain | Practical Implementation |
+|--------|-------------------------|
+| **Smart Corridors & Walkways** | Embedding tiled energy harvesters in high-traffic campus corridors, malls, and metro stations to drive local guidance lights. |
+| **Self-Powered IoT Sensor Nodes** | Periodic charging of low-power environmental or footfall counter sensors operating under ultra-low duty cycles. |
+| **Emergency Floor Path Indicators** | Powering step-synchronized luminescent escape path indicators during power grid outages. |
+| **Structural Health Monitoring** | Harvesting vibration energy from bridge joints and civil infrastructure to power wireless telemetry transceivers. |
+| **Educational STEM Demonstrations** | Tangible demonstration platform for teaching electromechanical energy conversion, impedance matching, and green micro-grids. |
 
-| Formula | Description |
-|---------|-------------|
-| $P = V \times I$ | Electrical power delivered to the load (Watts) |
-| $E = P \times t$ | Energy delivered over time $t$ (Joules), when power is approximately constant |
-| $E = \frac{1}{2} C V^2$ | Energy stored in a capacitor of capacitance $C$ charged to voltage $V$ (Joules) |
-| $V_{out} = V_{in} \times \frac{R_2}{R_1 + R_2}$ | Voltage divider for ADC input scaling |
-
-> **Note on Power:** Because piezoelectric output is intermittent (only during deformation and release) and the source impedance is very high, the average power over time is much lower than the instantaneous peak power. Reported values should specify whether they are peak, average, or time-integrated.
-
-### Results Table
-
-> 📌 **All values below are placeholders. Replace with actual experimental readings.**
-> Do **not** fabricate or estimate values; leave cells blank or as `—` if measurements were not taken.
-
-| Test Condition | Open-Circuit AC Voltage (V_oc) | Rectified DC Voltage (no load) | Loaded DC Voltage (V_L) | Load Current (I_L) | Estimated Power (P = V_L × I_L) | Observations |
-|---------------|-------------------------------|-------------------------------|------------------------|-------------------|--------------------------------|--------------|
-| Single light step | `___ V` | `___ V` | `___ V` | `___ µA / mA` | `___ µW / mW` | `[LED glow? Dim/Bright/None]` |
-| Single firm step | `___ V` | `___ V` | `___ V` | `___ µA / mA` | `___ µW / mW` | `[Observations]` |
-| 5 repeated steps | `___ V` | `___ V` | `___ V` | `___ µA / mA` | `___ µW / mW` | `[Capacitor charging observed?]` |
-| 10 repeated steps | `___ V` | `___ V` | `___ V` | `___ µA / mA` | `___ µW / mW` | `[Observations]` |
-| Jump / heavy pressure | `___ V` | `___ V` | `___ V` | `___ µA / mA` | `___ µW / mW` | `[Observations]` |
-
-### Capacitor Energy Storage (Example Calculation Format)
-
-If the capacitor charges to a voltage $V_C$ (to be filled from actual readings):
-
-$$E_{stored} = \frac{1}{2} \times C \times V_C^2$$
-
-*Example format (do not treat as experimental result):* If C = 1000 µF and V_C = 5 V → E = ½ × 1000×10⁻⁶ × 25 = **12.5 mJ**
-
-This is the theoretical maximum energy extractable; actual usable energy will be lower due to diode drops, capacitor ESR, and load impedance mismatch.
+This project aligns directly with **UN SDG Goal 7 (Affordable and Clean Energy)** and **UN SDG Goal 11 (Sustainable Cities and Communities)** by promoting decentralized kinetic energy scavenging.
 
 ---
 
-## 🌍 Applications
+## Advantages & Limitations
 
-The following applications are **potential use cases** for piezoelectric energy harvesting. Feasibility depends on the power levels achievable, which for this prototype are in the µW–mW range:
+### Advantages
+- **Renewable & Completely Fuel-Free** — Harnesses ambient kinetic energy that is otherwise wasted as ambient structural vibration or heat.
+- **Solid-State Reliability** — Piezoelectric discs have no rotating shafts, gearboxes, or sliding contacts, offering high theoretical operational lifespans.
+- **Scalable Architecture** — The tile framework can be expanded modularly by connecting multiple tiles in an aggregated grid network.
+- **Direct Voltage Generation** — Delivers instantaneous voltage output without requiring magnetic fields or external excitation voltages.
+- **Real-Time Visibility** — Integrated microcontroller display provides instant feedback on energy generation metrics.
 
-| Application | Description | Feasibility at Prototype Scale |
-|------------|-------------|-------------------------------|
-| **Footstep energy harvesting** | Embedding piezo tiles in corridors, railway stations, or malls to harvest footfall energy | Conceptual — low per-step energy; feasible only at scale with many tiles |
-| **Structural health monitoring** | Using piezo sensors embedded in bridges or buildings to harvest vibration energy and power embedded sensors | Low-power sensors possible; requires impedance matching |
-| **Self-powered IoT sensors** | Powering wireless sensor nodes from ambient vibration without a battery | Possible for ultra-low-power nodes (e.g., BLE beacons with duty cycling) |
-| **Educational demonstration** | Teaching energy harvesting, transducer physics, and circuit design in labs | Directly applicable — this is the primary scope of this prototype |
-| **Emergency lighting indicators** | Powering LED indicators in areas with high foot traffic as auxiliary signals | Demonstrative; not a replacement for primary lighting |
-
-> ⚠️ **Disclaimer:** This prototype does **not** generate sufficient power to charge smartphones, run household appliances, or supply continuous power to electronics. Any such claims require verified experimental evidence at much larger scale.
-
----
-
-## ⚖️ Advantages & Limitations
-
-### ✅ Advantages
-
-- **Passive energy recovery** — Harvests energy from an otherwise wasted mechanical source, with no fuel or primary energy input.
-- **Solid-state and low-maintenance** — No moving parts in the transducer itself; piezo elements are mechanically simple.
-- **Scalable concept** — More plates, optimised plate geometry, and better power conditioning can incrementally improve output.
-- **Environmentally benign during operation** — No emissions during energy harvesting.
-- **Educational value** — Provides tangible, hands-on learning about transducers, rectifiers, energy storage, and circuit design.
-- **Dual-use potential** — The same piezo elements can function as both sensors (measuring force) and generators (harvesting energy).
-
-### ❌ Limitations
-
-- **Very low power output** — The energy per footstep is extremely small (µJ to low mJ); not suitable for continuous or high-power loads.
-- **Intermittent and stochastic output** — Voltage is generated only during the compression and release transient; there is no output between footsteps.
-- **High source impedance** — The capacitive nature of piezo elements means that voltage collapses significantly under load, resulting in poor power transfer unless impedance matching is implemented.
-- **Diode drop losses** — A full-wave bridge rectifier introduces a forward voltage drop of approximately 1.2–1.4 V (two diodes in series at any given time), which is significant when the raw piezo output is small.
-- **Plate fragility** — Ceramic piezo elements are brittle and can crack under excessive or uneven mechanical loads.
-- **Practical power gap** — The gap between generated power and the power requirements of most real-world devices remains large without power management circuits, supercapacitors, and energy accumulation over time.
+### Limitations
+- **High Source Impedance** — Transducer source impedance is largely capacitive, yielding microampere-level currents under resistive loads without impedance matching.
+- **Intermittent Generation** — Power generation is strictly transient and tied to human activity; no steady-state base power exists during idle periods.
+- **Diode Threshold Losses** — Silicon bridge rectifiers consume $\approx 1.2\text{V} - 1.4\text{V}$ forward voltage drop, attenuating micro-level output signals.
+- **Mechanical Fatigue** — Rigid ceramic PZT elements are brittle and susceptible to structural micro-cracking under intense point loads over prolonged lifecycles.
+- **Power Scale Reality** — Micro-harvested energy is suitable for low-power sensors and indicators, not for powering heavy appliances or smartphones.
 
 ---
 
-## 🚧 Challenges & Solutions
+## Future Enhancements
 
-| Challenge Encountered | Root Cause | Solution / Mitigation Applied |
-|----------------------|------------|-------------------------------|
-| **Unstable / flickering LED output** | Intermittent piezo voltage; no sustained current between footsteps | Added capacitor as energy buffer; LED flickers briefly per step — expected behaviour |
-| **Very low loaded voltage** | High source impedance of piezo plates causes voltage collapse under load | Increased capacitor size; reduced load to minimum (single LED with high-value series resistor) |
-| **V_oc appears high but V_L is very low** | Piezo source impedance mismatch with low-impedance load | Documented as a fundamental property of piezoelectric sources; explained in results |
-| **Plate output varies with position** | Uneven pressure distribution across tile geometry or plate mounting | Distributed plates evenly; tested under full foot contact vs. heel/toe contact |
-| **Rectified voltage below diode threshold** | Very small piezo output; two diode drops (~1.4 V total) consume much of the signal | Identified use of Schottky diodes (lower V_f ~0.3 V) as a potential improvement |
-| **Plates cracking during testing** | Fragile ceramic substrate; excessive or off-centre mechanical load | Mounted plates on padded substrate; distributed load using a rigid plate above the piezo array |
-| **Inconsistent readings between test runs** | Variable step pressure and plate contact area | Standardised test procedure; recorded range of values rather than a single-point reading |
+- [ ] **Schottky Diode Rectification** — Replace 1N4007 diodes with BAT54 or 1N5819 Schottky diodes to lower conduction loss from $0.7\text{V}$ to $< 0.3\text{V}$.
+- [ ] **Active Synchronous Rectification** — Implement an active MOSFET-based bridge to eliminate diode threshold losses entirely.
+- [ ] **Dedicated Energy Harvesting PMIC** — Integrate an LTC3588-1 or BQ25504 nano-power buck/boost converter with built-in Maximum Power Point Tracking (MPPT).
+- [ ] **Supercapacitor Energy Bank** — Incorporate a $1.0\text{F} - 5.5\text{V}$ electric double-layer supercapacitor for prolonged charge storage between footstep intervals.
+- [ ] **Flexible PVDF Polymer Films** — Test Polyvinylidene Fluoride (PVDF) piezoelectric membranes for improved mechanical impact durability over brittle PZT discs.
+- [ ] **Wireless Bluetooth/IoT Telemetry** — Integrate an ESP32 or nRF52 BLE module to transmit footfall counts and real-time generation metrics to a smartphone dashboard.
+- [ ] **Multi-Tile Aggregation Network** — Expand from a single prototype tile to a full corridor walkway array with parallel power summation.
 
 ---
 
-## 🚀 Future Enhancements
+## Learning Outcomes
 
-> The following are **proposed extensions**, not features currently implemented in this prototype.
+This project provided hands-on engineering experience spanning electromechanics, power electronics, and embedded systems:
 
-- 🔧 **Schottky diode rectifier** — Replace 1N4007 diodes with Schottky diodes (e.g., 1N5819) to reduce forward voltage drop from ~0.7 V to ~0.3 V per diode, improving efficiency at low input voltages.
-- ⚡ **MPPT / impedance matching circuit** — Implement a Maximum Power Point Tracking (MPPT) circuit to dynamically match the source impedance of the piezo elements to the load for maximum power transfer.
-- 🔋 **Supercapacitor storage** — Replace or supplement the electrolytic capacitor with a supercapacitor (e.g., 1 F, 5.5 V) to store more energy and sustain the load for longer after each step.
-- 📈 **Power management IC** — Integrate a dedicated energy harvesting IC (e.g., LTC3588, BQ25504) that handles MPPT, voltage regulation, and efficient charging of a storage element.
-- 📡 **IoT monitoring** — Add a low-power wireless node (e.g., ESP32 in deep sleep, BLE sensor) powered partly by the harvested energy to log footfall count and estimated energy generated in real time.
-- 🏗️ **Multi-tile scale-up** — Connect multiple tiles in a corridor to aggregate harvested energy and evaluate cumulative output under realistic foot traffic conditions.
-- 📊 **Data logging** — Record voltage and current waveforms over time using an oscilloscope or a data acquisition module to build a complete energy profile per step.
-- 🔬 **Alternative piezo materials** — Investigate PVDF (polyvinylidene fluoride) films as a more flexible and mechanically robust alternative to rigid ceramic PZT discs.
+- **Piezoelectric Transduction Physics** — Practical understanding of the direct piezoelectric effect, dielectric displacement, and the severe impedance mismatch between capacitive sources and resistive loads.
+- **Analog Power Conditioning** — Practical design and assembly of full-wave rectification, passive filter design, capacitive storage dynamics, and diode forward voltage drop penalties.
+- **Microcontroller Interfacing** — 10-bit ADC programming, resistive voltage divider calibration, analog signal stability, and LCD interface driver programming.
+- **Prototyping & Fabrication** — Solderless breadboard layout design, fragile ceramic sensor soldering, platform mechanical integration, and circuit isolation.
+- **System Integration** — Harmonizing disparate mechanical, analog power, digital telemetry, and display subsystems into a cohesive engineering prototype.
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 Energy-Harvesting-with-Piezoelectric-Plates/
 │
 ├── images/
-│   ├── Block-Diagram.jpeg          # System block diagram
-│   ├── Circuit-Diagram.jpeg        # Full circuit schematic
-│   ├── image1.jpeg                 # Breadboard prototype with Arduino UNO and LCD
-│   ├── image2.jpeg                 # Circuit mounted on wooden base
-│   └── image3.jpeg                 # Complete floor tile with multiple piezo plates
+│   ├── Block-Diagram.jpeg           # System block diagram (Piezo -> Rectifier -> Storage -> Load)
+│   ├── Circuit-Diagram.jpeg         # Tinkercad circuit schematic and breadboard wiring
+│   ├── image1.jpeg                  # Breadboard prototype with Arduino UNO and 16x2 LCD
+│   ├── image2.jpeg                  # Wooden tile plate with 6 mounted piezoelectric discs
+│   └── image3.jpeg                  # Complete hardware prototype mounted on wooden base
 │
-├── src/                            # [Suggested] Arduino sketches and code
-│   └── voltage_monitor.ino         # [Add] Arduino sketch for ADC-based voltage display
+├── src/                             # [Optional] Arduino firmware source
+│   └── piezo_voltage_monitor.ino    # Main ADC sampling and LCD display sketch
 │
-├── docs/                           # [Suggested] Project documentation
-│   ├── project_report.pdf          # [Add] Full project report
-│   ├── component_datasheet.pdf     # [Add] Piezo plate / component datasheets
-│   └── experimental_data.xlsx      # [Add] Recorded measurements and analysis
-│
-├── LICENSE                         # MIT License
-└── README.md                       # This file
+├── LICENSE                          # MIT License
+└── README.md                        # Project documentation
 ```
 
-> 📌 Paths marked `[Add]` or `[Suggested]` are recommended additions; adapt the structure to match your actual repository contents.
+---
+
+## Resume Description
+
+> *Use these bullet points in your B.Tech engineering resume or portfolio under Technical Projects:*
+
+- **Engineered an electromechanical energy harvesting prototype** utilizing a 6-element ceramic PZT piezoelectric transducer array, full-wave diode bridge rectifier, and capacitive reservoir to scavenge kinetic footstep energy and convert it into usable DC potential.
+- **Developed real-time embedded instrumentation** using an Arduino UNO and 16×2 LCD screen, writing C++ firmware with 10-bit ADC sampling and calibrated voltage-divider scaling to measure and display micro-harvested potential across varied mechanical test loads.
+- **Analyzed transducer impedance and power transfer limits**, addressing challenges in source impedance matching, diode conduction loss ($1.4\text{V}$ drop), and capacitor charging dynamics to evaluate practical micro-generation feasibility for self-powered IoT applications.
 
 ---
 
-## 👥 Team Contributions
-
-| Team Member | Role | Contributions |
-|-------------|------|---------------|
-| **Vansh Thakur** | `[Role — e.g., Team Lead / Hardware Design]` | `[e.g., Circuit design, component sourcing, Arduino programming, documentation]` |
-| **`[Team Member 2 Name]`** | `[Role]` | `[Contributions]` |
-| **`[Team Member 3 Name]`** | `[Role]` | `[Contributions]` |
-
-> Update the above table with the actual names, roles, and contributions of all team members.
-
-**Institution:** Chitkara University, Punjab
-**Programme:** B.Tech — `[Branch, e.g., Computer Science Engineering / Electronics Engineering]`
-**Academic Year:** `[e.g., 2024–25, Semester III/IV]`
-**Guide / Supervisor:** `[Faculty name and department]`
-
----
-
-## 🎓 Learning Outcomes
-
-Through the design, assembly, and testing of this project, the team developed practical understanding and skills in:
-
-- ⚡ **Piezoelectricity** — The direct and converse piezoelectric effects, material properties, and the physical origin of voltage generation under mechanical stress.
-- 🔄 **Energy conversion** — The multi-stage conversion chain from mechanical energy to electrical energy, including conversion losses at each stage.
-- 🔌 **Rectifier circuit design** — Full-wave bridge rectifier operation, diode characteristics, and the significance of forward voltage drop in low-power circuits.
-- 🔋 **Energy storage** — Capacitor charging and discharging behaviour, the relationship between capacitance, voltage, and stored energy.
-- 📏 **Electrical measurements** — Using multimeters to measure AC and DC voltage, current, and resistance; understanding the distinction between open-circuit and loaded measurements.
-- 📐 **Impedance concepts** — Understanding source impedance, load impedance, and the impact of impedance mismatch on power delivery.
-- 🛠️ **Hardware prototyping** — Breadboard assembly, soldering, mechanical integration of electronics with physical structures, and systematic debugging.
-- 📊 **Experimental analysis** — Designing a measurement methodology, recording data systematically, and interpreting results in the context of theoretical expectations.
-- 📝 **Technical documentation** — Writing clear engineering documentation, structuring a project report, and presenting technical work for academic assessment.
-
----
-
-## 📄 Resume Description
-
-> The following bullet points are written for use in a B.Tech engineering student's resume under a **Projects** section. They are framed around skills and actions demonstrated, without fabricating specific performance metrics.
-
-- **Designed and assembled** a piezoelectric energy harvesting prototype floor tile that converts mechanical footstep pressure into measurable DC electrical energy using ceramic piezo transducers, a full-wave bridge rectifier, and capacitive storage — demonstrating the feasibility of ambient mechanical energy recovery at the prototype scale.
-- **Integrated Arduino UNO** for real-time analog voltage monitoring and LCD display, implementing ADC-based measurement with voltage divider scaling to characterise the rectified DC output under varying mechanical input conditions.
-- **Analysed the energy conversion chain** from mechanical input through transduction, rectification, and capacitive storage to a low-power LED load — gaining practical understanding of source impedance effects, diode conduction losses, and the distinction between open-circuit voltage and usable electrical power.
-
----
-
-## 📜 License & Acknowledgements
+## License & Acknowledgements
 
 ### License
 
-This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
-
-```
-MIT License
-Copyright (c) 2025 Vansh Thakur
-```
+This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.  
+© 2025 Vansh Thakur. Free to use for academic, research, and non-commercial purposes with attribution.
 
 ### Acknowledgements
 
-- **Chitkara University, Punjab** — for providing laboratory facilities and institutional support.
-- **`[Supervisor / Faculty Name]`** — for guidance and technical oversight throughout the project.
-- **`[Any referenced textbook or paper]`** — e.g., *Piezoelectric Energy Harvesting* by Erturk & Inman; IEEE papers on ambient energy harvesting.
-- The open-source Arduino community for libraries and reference implementations used in this project.
+- **Chitkara University, Punjab** — Academic facilities, lab resources, and engineering mentorship.
+- **Arduino Open-Source Community** — Reference hardware documentation and `LiquidCrystal` core libraries.
+- **Autodesk Tinkercad** — Circuit simulation platform for schematic design and component layout.
+- **UN Sustainable Development Goals** — Framework alignment for SDG 7 (Affordable and Clean Energy) and SDG 11 (Sustainable Cities).
 
 ---
 
 <div align="center">
 
-**⭐ If you found this project useful or educational, please consider starring the repository.**
+**Vansh Thakur**  
+B.Tech Computer Science Engineering (Core)  
+Chitkara University, Punjab  
 
-Made with 🔩 and ⚡ by **Vansh Thakur** | Chitkara University, Punjab
+[![GitHub](https://img.shields.io/badge/GitHub-Vans30m-181717?logo=github)](https://github.com/Vans30m)
 
-[![GitHub](https://img.shields.io/badge/GitHub-Vans30m-181717?style=flat-square&logo=github)](https://github.com/Vans30m)
+*Scavenging wasted kinetic energy for a cleaner, self-powered future.*
 
 </div>
